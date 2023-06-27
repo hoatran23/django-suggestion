@@ -1,0 +1,103 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Chat Bot Suggestion{% endblock %}
+
+{% block styles %}
+<link href="{% static 'chatbot/css/chatbot.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <!-- <div class="col-sm-3">
+        <table>
+            <tr>
+                <th>Parent Crop</th>
+                <th>Master Crop</th>
+                <th>Growing Method</th>
+            </tr>
+            {% for item in combi %}
+            <tr>
+                    <td>{{item.parentcropid}}</td>
+                    <td>{{item.mastercropid}}</td>
+                    <td>{{item.growingmethodid|default:"Giá trị mặc định"}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div> -->
+    <div class="card flex-grow-1">
+        <div class="card-header bg-primary text-white">Chat</div>
+        <div class="card-body messages-box">
+            <ul class="list-unstyled messages-list">
+                {% for chat in chats %}
+                <li class="message sent">
+                    <div class="message-text">
+                        <div class="message-sender">
+                            <b>You</b>
+                        </div>
+                        <div class="message-content">
+                            <p>{{chat.message}}</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="message received">
+                    <div class="message-text">
+                        <div class="message-sender">
+                            <b>AI Chatbot</b>
+                        </div>
+                        <div class="message-content">
+                            <p>{{chat.response}}</p>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <form class="message-form">
+        {%csrf_token%}
+        <div class="input-group">
+            <input type="text" class="form-control message-input" placeholder="Type your message..." value="{{questions.first.questiontext}}">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary btn-send">Send</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% block scripts %}
+<script src=" {% static 'chatbot/js/chatbot.js' %} "></script>
+{% endblock %}
+
+{% endblock %}
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open AI Chat Bot</title>
+</head>
+<body>
+    <h3>Input anything</h3>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" class="form-control" name="user-input">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    {% if chatbot_response %}
+    <p>{{ chatbot_response}}</p>
+    {% endif %}
+</body>
+</html> -->

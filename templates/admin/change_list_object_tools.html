@@ -1,0 +1,17 @@
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+  {% if has_add_permission %}
+  <li>
+    {% url cl.opts|admin_urlname:'add' as add_url %}
+    <a href="{% add_preserved_filters add_url is_popup to_field %}" class="addlink">
+      {% blocktranslate with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktranslate %}
+    </a>
+  </li>
+  <li>
+    {% if cl.opts.verbose_name != 'polls question' %}
+        <a href="{% url 'chatbot:chatbot' slug=cl.opts.verbose_name %}" target="_blank" id="getSuggest" class="btn btn-high btn-success">Get Suggest</a>
+    {% endif %}
+  </li>
+  {% endif %}
+{% endblock %}

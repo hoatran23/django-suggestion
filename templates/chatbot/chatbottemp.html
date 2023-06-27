@@ -1,0 +1,81 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}TEND - Chat Bot Suggestion{% endblock %}
+
+{% block styles %}
+<link href="{% static 'chatbot/css/chatbottemp.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex">
+                        <div class="col-6">
+                            <h3>TEND - Chat GPT</h3>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a type="button" onclick="window.print()" class="btn  btn-outline-info">Print</a>
+                            <a type="button" class="btn btn-outline-danger " onclick="clearContent()">Clear</a>
+                            <label class="switch mb-0 pl-5">
+                                <input type="checkbox" id="darkModeToggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body chat-box rounded p1" id="chatbox">
+                    <span id="copy-popup" class="popup">Copied!</span>
+                </div>
+                <div class="card-footer">
+                    <form class="message-form" method="POST" action="{% url 'chatbot:chatbotconversation' %}">
+                        {%csrf_token%}
+                        <div class="form-group row">
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">More
+                                            Suggest</span>
+                                        <button type="button"
+                                            class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <div class="list-group list-group-flush scrollable-list" id="buttonGroup">
+                                                {% for question in questions %}
+                                                {% if question %}
+                                                <button type="button"
+                                                    class="text-left list-group-item {% if forloop.first %}active{% endif %}">{{ question }}</button>
+                                                {% endif %}
+                                                {% empty %}
+                                                <p class="m-0 list-group-item">No more suggestion</p>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <textarea id="userInput" rows="1" class="form-control dark-theme auto-expand"
+                                        placeholder="Type your message here...">{{ questions.0 }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="input-group-append">
+                                    <input id="sendButton" type="button" value="Submit"
+                                        class="form-control btn btn-success btn-block"></input>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src=" {% static 'chatbot/js/chatbottemp.js' %} "></script>
+{% endblock %}
